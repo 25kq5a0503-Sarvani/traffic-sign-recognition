@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dataset | Traffic Sign Recognition</title>
+  <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+
+<nav class="navbar">
+  <a href="/" class="logo">🚦 TrafficSign AI</a>
+  <ul>
+    <li><a href="/">Home</a></li>
+    <li><a href="/dataset">Dataset</a></li>
+    <li><a href="/train">Train Model</a></li>
+    <li><a href="/predict">Predict</a></li>
+    <li><a href="/live-auto">Auto Detection</a></li>
+    <li><a href="/about">About</a></li>
+  </ul>
+</nav>
+
+<div class="hero" style="padding:50px 2rem">
+  <h1>📊 Dataset Information</h1>
+  <p>German Traffic Sign Recognition Benchmark (GTSRB)</p>
+</div>
+
+<div class="section">
+
+  <!-- Stats -->
+  <div class="grid-3" id="dataset-stats" style="margin-bottom:3rem">
+    <div class="stat-card">
+      <div class="number" id="total-images">—</div>
+      <div class="label">Total Images</div>
+    </div>
+    <div class="stat-card">
+      <div class="number" id="num-classes">43</div>
+      <div class="label">Sign Classes</div>
+    </div>
+    <div class="stat-card">
+      <div class="number">32×32</div>
+      <div class="label">Image Size (pixels)</div>
+    </div>
+  </div>
+
+  <!-- About dataset -->
+  <h2 class="section-title">About GTSRB</h2>
+  <p class="section-sub">One of the most widely used benchmarks for traffic sign classification</p>
+
+  <div class="grid-2">
+    <div class="card">
+      <h3>📌 Dataset Details</h3>
+      <ul style="margin-top:1rem; padding-left:1.2rem; line-height:2">
+        <li>Name: German Traffic Sign Recognition Benchmark</li>
+        <li>Total classes: 43 types of traffic signs</li>
+        <li>Training images: ~39,000+</li>
+        <li>Test images: ~12,000+</li>
+        <li>Image format: PPM / PNG</li>
+        <li>Source: Kaggle / GTSRB official</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>⚙️ Preprocessing Steps</h3>
+      <ul style="margin-top:1rem; padding-left:1.2rem; line-height:2">
+        <li>Resize all images to 32×32 pixels</li>
+        <li>Convert to RGB format</li>
+        <li>Normalize pixel values: 0–255 → 0–1</li>
+        <li>One-hot encode class labels</li>
+        <li>Split: 80% train / 20% test</li>
+        <li>Random state = 42 (reproducibility)</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Sign categories -->
+  <h2 class="section-title" style="margin-top:3rem">Sign Categories</h2>
+  <p class="section-sub">43 classes of German traffic signs</p>
+
+  <div class="grid-3">
+    <div class="card">
+      <h3>🔴 Prohibitory Signs</h3>
+      <p>Speed limits, No passing, No entry, No vehicles — signs that restrict or forbid certain actions.</p>
+    </div>
+    <div class="card">
+      <h3>⚠️ Warning Signs</h3>
+      <p>Bumpy road, Slippery road, Children crossing, Wild animals — signs alerting drivers to hazards ahead.</p>
+    </div>
+    <div class="card">
+      <h3>🔵 Mandatory Signs</h3>
+      <p>Keep right, Roundabout, Ahead only — signs indicating what drivers must do.</p>
+    </div>
+    <div class="card">
+      <h3>🟡 Priority Signs</h3>
+      <p>Yield, Priority road, Right-of-way — signs that control traffic flow at intersections.</p>
+    </div>
+    <div class="card">
+      <h3>🟢 Information Signs</h3>
+      <p>Road work, Traffic signals, General caution — signs that provide important information to drivers.</p>
+    </div>
+    <div class="card">
+      <h3>⬜ End Signs</h3>
+      <p>End of speed limits, End of no passing — signs cancelling previous restrictions.</p>
+    </div>
+  </div>
+
+  <!-- How to add dataset -->
+  <div class="card" style="margin-top:3rem; background:#fff8e1">
+    <h3>📁 How to Add Dataset</h3>
+    <p style="margin-top:1rem; line-height:1.8">
+      1. Download GTSRB from <strong>Kaggle</strong><br>
+      2. Extract the ZIP file<br>
+      3. Place the <strong>Train/</strong> folder inside <code>dataset/</code><br>
+      4. Structure should be: <code>dataset/Train/0/</code>, <code>dataset/Train/1/</code> ... <code>dataset/Train/42/</code><br>
+      5. Go to <a href="/train">Train page</a> and click Start Training
+    </p>
+  </div>
+
+</div>
+
+<footer>
+  <p>🚦 Traffic Sign Recognition | ML Project | Built with Flask + TensorFlow</p>
+</footer>
+
+<script src="/static/js/main.js"></script>
+</body>
+</html>

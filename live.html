@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Live Detection | Traffic Sign Recognition</title>
+  <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+
+<nav class="navbar">
+  <a href="/" class="logo">🚦 TrafficSign AI</a>
+  <ul>
+    <li><a href="/">Home</a></li>
+    <li><a href="/predict">Upload & Predict</a></li>
+    <li><a href="/live">Live Detection</a></li>
+    <li><a href="/live-auto">Auto Detection</a></li>
+    <li><a href="/about">About</a></li>
+  </ul>
+</nav>
+
+<div class="hero" style="padding:50px 2rem">
+  <h1>🎥 Live Detection</h1>
+  <p>Point your webcam at a traffic sign — AI detects it instantly!</p>
+</div>
+
+<div class="section">
+  <div class="grid-2">
+
+    <div class="card">
+      <h3>📷 Live Camera</h3>
+      <p style="color:#666; margin:0.75rem 0 1rem">Start camera and point at any traffic sign!</p>
+
+      <div style="position:relative; width:100%; background:#000; border-radius:12px; min-height:280px; overflow:hidden">
+        <video id="webcam" autoplay playsinline
+          style="width:100%; border-radius:12px; display:none">
+        </video>
+        <canvas id="canvas" style="display:none"></canvas>
+        <div id="cam-placeholder"
+          style="display:flex; align-items:center; justify-content:center;
+                 min-height:280px; color:white; font-size:1.1rem; text-align:center;
+                 flex-direction:column; gap:1rem">
+          <div style="font-size:3rem">📷</div>
+          <p>Click Start Camera to begin</p>
+        </div>
+      </div>
+
+      <div id="cam-alert" class="alert" style="margin-top:1rem"></div>
+
+      <div style="display:flex; gap:1rem; margin-top:1rem">
+        <button class="btn btn-secondary" id="start-btn" onclick="startCamera()" style="flex:1">
+          ▶️ Start Camera
+        </button>
+        <button class="btn btn-danger" id="stop-btn" onclick="stopCamera()" style="flex:1" disabled>
+          ⏹️ Stop Camera
+        </button>
+      </div>
+
+      <button class="btn btn-primary" id="capture-btn" onclick="captureAndPredict()"
+        style="width:100%; margin-top:1rem" disabled>
+        📸 Capture & Predict
+      </button>
+    </div>
+
+    <div>
+      <div class="result-box" id="result-box" style="display:block; min-height:200px">
+        <div style="font-size:4rem">🚦</div>
+        <div class="sign-name" id="sign-name">Start camera to detect</div>
+        <div class="confidence" id="confidence">Confidence: —</div>
+      </div>
+
+      <!-- Top 3 -->
+      <div class="card" id="top3-card" style="margin-top:1.5rem; display:none">
+        <h3>🏆 Top 3 Predictions</h3>
+        <div id="top3-list" style="margin-top:1rem"></div>
+      </div>
+
+      <div class="card" style="margin-top:1.5rem">
+        <h3>💡 How to Use</h3>
+        <ul style="margin-top:1rem; padding-left:1.2rem; line-height:2.2; color:#555">
+          <li>Click <b>Start Camera</b></li>
+          <li>Show traffic sign to webcam</li>
+          <li>Click <b>Capture & Predict</b></li>
+          <li>Result appears with voice! 🔊</li>
+        </ul>
+      </div>
+
+      <div class="card" style="margin-top:1.5rem; background:#e8f8f5">
+        <h3>🎯 Supported Signs</h3>
+        <p style="margin-top:0.75rem; color:#555; line-height:1.7">
+          43 types of German traffic signs including speed limits, stop signs, yield signs, and more!
+        </p>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<footer>
+  <p>🚦 Traffic Sign Recognition | ML Project | Built with Flask + TensorFlow</p>
+</footer>
+
+<script src="/static/js/main.js"></script>
+<script>
+let stream = null;
+
+async function startCamera() {
+  try {
+    stream = await navigator.mediaDevices.getUserMedia({ video: true });
+    const video = document.getElementById('webcam');
+    video.srcObject = stream;
+    video.style.display = 'block';
+    document.getElementById('cam-placeholder').style.display = 'none';
+    document.getElementById('start-btn').disabled  = true;
+    document.getElementById('stop-btn').disabled   = false;
+    document.getElementById('capture-btn').disabled = false;
+    showAlert('cam-alert', '✅ Camera started! Point at a traffic sign!', 'success');
+  } catch (err) {
+    showAlert('cam-alert', '❌ Camera access denied!', 'error');
+  }
+}
+
+function stopCamera() {
+  if (stream) { stream.getTracks().forEach(t => t.stop()); stream = null; }
+  const video = document.getElementById('webcam');
+  video.srcObject = null;
+  video.style.display = 'none';
+  document.getElementById('cam-placeholder').style.display = 'flex';
+  document.getElementById('start-btn').disabled  = false;
+  document.getElementById('stop-btn').disabled   = true;
+  document.getElementById('capture-btn').disabled = true;
+  showAlert('cam-alert', '⏹️ Camera stopped.', 'info');
+}
+
+async function captureAndPredict() {
+  const video  = document.getElementById('webcam');
+  const canvas = document.getElementById('canvas');
+  canvas.width  = video.videoWidth;
+  canvas.height = video.videoHeight;
+  canvas.getContext('2d').drawImage(video, 0, 0);
+
+  showAlert('cam-alert', '🔍 Analyzing...', 'info');
+
+  canvas.toBlob(async (blob) => {
+    const formData = new FormData();
+    formData.append('file', blob, 'webcam_capture.png');
+
+    try {
+      const res  = await fetch('/api/predict', { method: 'POST', body: formData });
+      const data = await res.json();
+
+      if (data.error) {
+        showAlert('cam-alert', '❌ ' + data.error, 'error');
+        return;
+      }
+
+      document.getElementById('result-box').style.display = 'block';
+      document.getElementById('sign-name').textContent    = data.sign_name;
+      document.getElementById('confidence').textContent   = `Confidence: ${data.confidence}%`;
+      showAlert('cam-alert', `✅ Detected: ${data.sign_name}!`, 'success');
+
+      // 🔊 Voice Output
+      speakResult(data.sign_name, data.confidence);
+
+      // Top 3
+      const top3Card = document.getElementById('top3-card');
+      const top3List = document.getElementById('top3-list');
+      if (data.top3 && data.confidence < 90) {
+        top3List.innerHTML = data.top3.map((item, i) => `
+          <div style="padding:10px 14px; margin:6px 0;
+                      background:${i===0?'#e8f8f5':'#f8f9fa'};
+                      border-left:4px solid ${i===0?'#02C39A':'#065A82'};
+                      border-radius:6px; display:flex; justify-content:space-between">
+            <span>${i===0?'🥇':i===1?'🥈':'🥉'} <b>${item.sign_name}</b></span>
+            <span style="color:${i===0?'#02C39A':'#065A82'}; font-weight:bold">
+              ${item.confidence}%
+            </span>
+          </div>`).join('');
+        top3Card.style.display = 'block';
+      } else {
+        top3Card.style.display = 'none';
+      }
+
+    } catch (err) {
+      showAlert('cam-alert', '❌ Error: ' + err.message, 'error');
+    }
+  }, 'image/png');
+}
+
+function showAlert(id, msg, type) {
+  const el = document.getElementById(id);
+  el.textContent = msg;
+  el.className = 'alert alert-' + type;
+  el.style.display = 'block';
+}
+</script>
+
+</body>
+</html>

@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Train Model | Traffic Sign Recognition</title>
+  <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+
+<nav class="navbar">
+  <a href="/" class="logo">🚦 TrafficSign AI</a>
+  <ul>
+    <li><a href="/">Home</a></li>
+    <li><a href="/dataset">Dataset</a></li>
+    <li><a href="/train">Train Model</a></li>
+    <li><a href="/predict">Predict</a></li>
+    <li><a href="/live-auto">Auto Detection</a></li>
+    <li><a href="/about">About</a></li>
+  </ul>
+</nav>
+
+<div class="hero" style="padding:50px 2rem">
+  <h1>🧠 Train the CNN Model</h1>
+  <p>Click the button to train the model on the GTSRB dataset. Takes ~5 minutes with GPU.</p>
+</div>
+
+<div class="section">
+  <div class="grid-2">
+
+    <!-- Train card -->
+    <div class="card">
+      <h3>🚀 Start Training</h3>
+      <p style="margin: 1rem 0; color:#555; line-height:1.7">
+        Before training, make sure you have placed the GTSRB dataset inside the
+        <code>dataset/Train/</code> folder. The model will train for <strong>15 epochs</strong>
+        and save to <code>model/traffic_model.h5</code>.
+      </p>
+
+      <div id="train-alert" class="alert"></div>
+
+      <button class="btn btn-primary" id="train-btn" onclick="startTraining()" style="width:100%">
+        🚀 Start Training
+      </button>
+
+      <!-- Progress -->
+      <div id="prog-wrap" style="display:none; margin-top:1.5rem">
+        <div style="display:flex; justify-content:space-between; margin-bottom:6px">
+          <span id="prog-msg" style="font-size:0.9rem; color:#555">Starting...</span>
+        </div>
+        <div class="progress-wrap">
+          <div class="progress-bar" id="prog-bar"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Model info card -->
+    <div class="card">
+      <h3>🏗️ CNN Architecture</h3>
+      <table style="width:100%; border-collapse:collapse; margin-top:1rem; font-size:0.9rem">
+        <thead>
+          <tr style="background:var(--primary); color:white">
+            <th style="padding:8px; text-align:left">Layer</th>
+            <th style="padding:8px; text-align:left">Type</th>
+            <th style="padding:8px; text-align:left">Details</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr style="background:#f5f5f5"><td style="padding:8px">1</td><td style="padding:8px">Conv2D</td><td style="padding:8px">32 filters, 3×3, ReLU</td></tr>
+          <tr><td style="padding:8px">2</td><td style="padding:8px">Conv2D</td><td style="padding:8px">32 filters, 3×3, ReLU</td></tr>
+          <tr style="background:#f5f5f5"><td style="padding:8px">3</td><td style="padding:8px">MaxPooling2D</td><td style="padding:8px">2×2</td></tr>
+          <tr><td style="padding:8px">4</td><td style="padding:8px">Dropout</td><td style="padding:8px">25%</td></tr>
+          <tr style="background:#f5f5f5"><td style="padding:8px">5</td><td style="padding:8px">Conv2D</td><td style="padding:8px">64 filters, 3×3, ReLU</td></tr>
+          <tr><td style="padding:8px">6</td><td style="padding:8px">Conv2D</td><td style="padding:8px">64 filters, 3×3, ReLU</td></tr>
+          <tr style="background:#f5f5f5"><td style="padding:8px">7</td><td style="padding:8px">MaxPooling2D</td><td style="padding:8px">2×2</td></tr>
+          <tr><td style="padding:8px">8</td><td style="padding:8px">Dropout</td><td style="padding:8px">25%</td></tr>
+          <tr style="background:#f5f5f5"><td style="padding:8px">9</td><td style="padding:8px">Flatten</td><td style="padding:8px">—</td></tr>
+          <tr><td style="padding:8px">10</td><td style="padding:8px">Dense</td><td style="padding:8px">256 units, ReLU</td></tr>
+          <tr style="background:#f5f5f5"><td style="padding:8px">11</td><td style="padding:8px">Dropout</td><td style="padding:8px">50%</td></tr>
+          <tr><td style="padding:8px">12</td><td style="padding:8px">Dense (Output)</td><td style="padding:8px">43 units, Softmax</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+
+  <!-- Training graphs -->
+  <div class="card" style="margin-top:2rem; text-align:center">
+    <h3>📈 Training Graphs</h3>
+    <p style="color:#666; margin-top:0.5rem">Graphs appear here after training completes.</p>
+    <img id="graph-img" class="graph-img" src="" alt="Training Graphs">
+  </div>
+
+  <!-- Training params -->
+  <div class="card" style="margin-top:2rem; background:#f0fff4">
+    <h3>⚙️ Training Parameters</h3>
+    <div class="grid-3" style="margin-top:1rem">
+      <div style="text-align:center">
+        <div style="font-size:2rem; font-weight:700; color:var(--primary)">15</div>
+        <div style="color:#555">Epochs</div>
+      </div>
+      <div style="text-align:center">
+        <div style="font-size:2rem; font-weight:700; color:var(--primary)">32</div>
+        <div style="color:#555">Batch Size</div>
+      </div>
+      <div style="text-align:center">
+        <div style="font-size:2rem; font-weight:700; color:var(--primary)">~90%</div>
+        <div style="color:#555">Expected Accuracy</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  <p>🚦 Traffic Sign Recognition | ML Project | Built with Flask + TensorFlow</p>
+</footer>
+
+<script src="/static/js/main.js"></script>
+</body>
+</html>

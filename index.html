@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Traffic Sign Recognition</title>
+  <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+
+<nav class="navbar">
+  <a href="/" class="logo">🚦 TrafficSign AI</a>
+  <ul>
+    <li><a href="/">Home</a></li>
+    <li><a href="/dataset">Dataset</a></li>
+    <li><a href="/train">Train Model</a></li>
+    <li><a href="/predict">Predict</a></li>
+    <li><a href="/live-auto">Auto Detection</a></li>
+    <li><a href="/about">About</a></li>
+  </ul>
+</nav>
+
+<div class="hero">
+  <h1>🚦 Traffic Sign Recognition</h1>
+  <p>An AI-powered system that automatically detects and classifies traffic signs from images using Deep Learning.</p>
+  <a href="/predict" class="btn btn-primary">Try Live Prediction →</a>
+  &nbsp;
+  <a href="/train" class="btn btn-secondary">Train Model</a>
+</div>
+
+<div class="section">
+  <h2 class="section-title">Why Traffic Sign Recognition?</h2>
+  <p class="section-sub">Manual identification of signs fails at high speeds. AI makes it instant and accurate.</p>
+
+  <div class="grid-3">
+    <div class="card">
+      <h3>🚗 Road Safety</h3>
+      <p>Automated sign recognition helps drivers and autonomous vehicles react faster to road conditions, reducing accidents.</p>
+    </div>
+    <div class="card">
+      <h3>🤖 Self-Driving Cars</h3>
+      <p>Every autonomous vehicle depends on real-time traffic sign classification to navigate safely on public roads.</p>
+    </div>
+    <div class="card">
+      <h3>📷 Computer Vision</h3>
+      <p>This project demonstrates how CNN models can understand visual information just like the human eye.</p>
+    </div>
+  </div>
+</div>
+
+<div style="background:#e8f4fd; padding: 60px 2rem;">
+  <div style="max-width:1100px; margin:0 auto;">
+    <h2 class="section-title">How It Works</h2>
+    <p class="section-sub">4 simple steps from image to prediction</p>
+    <div class="grid-3" style="grid-template-columns: repeat(auto-fit, minmax(220px,1fr))">
+      <div class="card" style="text-align:center">
+        <div style="font-size:3rem">📂</div>
+        <h3>1. Load Dataset</h3>
+        <p>50,000+ GTSRB images across 43 sign categories are loaded and preprocessed.</p>
+      </div>
+      <div class="card" style="text-align:center">
+        <div style="font-size:3rem">🧠</div>
+        <h3>2. Train CNN</h3>
+        <p>A Convolutional Neural Network learns patterns from thousands of sign images.</p>
+      </div>
+      <div class="card" style="text-align:center">
+        <div style="font-size:3rem">📤</div>
+        <h3>3. Upload Image</h3>
+        <p>User uploads any traffic sign image through the web interface.</p>
+      </div>
+      <div class="card" style="text-align:center">
+        <div style="font-size:3rem">✅</div>
+        <h3>4. Get Result</h3>
+        <p>Model instantly predicts the sign name with confidence percentage.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="section" style="text-align:center">
+  <h2 class="section-title">Ready to try?</h2>
+  <p class="section-sub">Train the model first, then predict any traffic sign!</p>
+  <a href="/train" class="btn btn-primary" style="margin-right:1rem">🚀 Train Model</a>
+  <a href="/predict" class="btn btn-secondary">🔍 Predict Sign</a>
+</div>
+
+<footer>
+  <p>🚦 Traffic Sign Recognition | ML Project | Built with Flask + TensorFlow</p>
+</footer>
+
+<script src="/static/js/main.js"></script>
+</body>
+</html>

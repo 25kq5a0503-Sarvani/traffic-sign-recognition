@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Predict | Traffic Sign Recognition</title>
+  <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+
+<nav class="navbar">
+  <a href="/" class="logo">🚦 TrafficSign AI</a>
+  <ul>
+    <li><a href="/">Home</a></li>
+    <li><a href="/predict">Upload & Predict</a></li>
+    <li><a href="/live">Live Detection</a></li>
+    <li><a href="/live-auto">Auto Detection</a></li>
+    <li><a href="/about">About</a></li>
+  </ul>
+</nav>
+
+<div class="hero" style="padding:50px 2rem">
+  <h1>📤 Upload & Predict</h1>
+  <p>Upload a traffic sign image — AI will identify it instantly with 99.43% accuracy!</p>
+</div>
+
+<div class="section">
+  <div class="grid-2">
+
+    <div class="card">
+      <h3>📤 Upload Image</h3>
+      <p style="color:#666; margin:0.75rem 0 1rem">Click to select a traffic sign image.</p>
+
+      <label for="img-input" style="display:block; cursor:pointer">
+        <div class="upload-box" id="upload-box">
+          <div style="font-size:3rem">📷</div>
+          <p>Click here to browse image</p>
+        </div>
+      </label>
+      <input type="file" id="img-input" accept="image/*" style="display:none">
+
+      <img id="preview-img" src="" alt="Preview"
+           style="display:none; max-width:100%; border-radius:10px; margin-top:1rem">
+
+      <div id="pred-alert" class="alert"></div>
+
+      <button class="btn btn-primary" onclick="predictSign()"
+              style="width:100%; margin-top:1rem">
+        🔍 Predict Sign
+      </button>
+    </div>
+
+    <!-- Result section -->
+    <div>
+      <!-- Main result -->
+      <div class="result-box" id="result-box" style="display:block; min-height:200px">
+        <div style="font-size:4rem">🚦</div>
+        <div class="sign-name" id="sign-name">Upload an image to predict</div>
+        <div class="confidence" id="confidence">Confidence: —</div>
+      </div>
+
+      <!-- Top 3 results -->
+      <div class="card" id="top3-card" style="margin-top:1.5rem; display:none">
+        <h3>🏆 Top 3 Predictions</h3>
+        <div id="top3-list" style="margin-top:1rem"></div>
+      </div>
+
+      <div class="card" style="margin-top:1.5rem">
+        <h3>💡 Tips for Best Results</h3>
+        <ul style="margin-top:1rem; padding-left:1.2rem; line-height:2; color:#555">
+          <li>Use clear, well-lit images</li>
+          <li>Sign should be the main subject</li>
+          <li>Avoid blurry or distorted images</li>
+          <li>German traffic sign images work best</li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<footer>
+  <p>🚦 Traffic Sign Recognition | ML Project | Built with Flask + TensorFlow</p>
+</footer>
+
+<script src="/static/js/main.js"></script>
+<script>
+  document.getElementById('img-input').addEventListener('change', function() {
+    if (this.files[0]) {
+      const reader = new FileReader();
+      reader.onload = e => {
+        const preview = document.getElementById('preview-img');
+        preview.src = e.target.result;
+        preview.style.display = 'block';
+      };
+      reader.readAsDataURL(this.files[0]);
+    }
+  });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About | Traffic Sign Recognition</title>
+  <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+
+<nav class="navbar">
+  <a href="/" class="logo">🚦 TrafficSign AI</a>
+  <ul>
+    <li><a href="/">Home</a></li>
+    <li><a href="/dataset">Dataset</a></li>
+    <li><a href="/train">Train Model</a></li>
+    <li><a href="/predict">Predict</a></li>
+    <li><a href="/live-auto">Auto Detection</a></li>
+    <li><a href="/about">About</a></li>
+  </ul>
+</nav>
+
+<div class="hero" style="padding:50px 2rem">
+  <h1>ℹ️ About This Project</h1>
+  <p>Understanding the ML approach behind Traffic Sign Recognition</p>
+</div>
+
+<div class="section">
+
+  <div class="grid-2" style="margin-bottom:2.5rem">
+    <div class="card">
+      <h3>🎯 Project Goal</h3>
+      <p style="margin-top:1rem; line-height:1.8; color:#555">
+        Build a web application that automatically detects and classifies traffic signs from images
+        using a deep learning model. The system helps autonomous vehicles and driver-assistance
+        systems recognize road signs in real-time.
+      </p>
+    </div>
+    <div class="card">
+      <h3>🛠️ Tech Stack</h3>
+      <ul style="margin-top:1rem; padding-left:1.2rem; line-height:2; color:#555">
+        <li><strong>Frontend:</strong> HTML5, CSS3, JavaScript</li>
+        <li><strong>Backend:</strong> Python, Flask</li>
+        <li><strong>ML Framework:</strong> TensorFlow / Keras</li>
+        <li><strong>Model Type:</strong> CNN (Convolutional Neural Network)</li>
+        <li><strong>Dataset:</strong> GTSRB (43 classes, 50k+ images)</li>
+      </ul>
+    </div>
+  </div>
+
+  <h2 class="section-title">🧠 What is CNN?</h2>
+  <p class="section-sub">Convolutional Neural Network — the brain behind image recognition</p>
+
+  <div class="card" style="margin-bottom:2rem">
+    <p style="line-height:1.9; color:#444">
+      A <strong>Convolutional Neural Network (CNN)</strong> is a type of deep learning model specially
+      designed to process images. Just like our eyes scan an image and our brain identifies objects,
+      a CNN scans the image layer by layer and learns patterns like edges, shapes, and colors.<br><br>
+      In this project, the CNN looks at a traffic sign image and compares it to patterns it learned
+      from 50,000+ training images to identify which of the 43 sign types it is.
+    </p>
+  </div>
+
+  <h2 class="section-title">🏗️ CNN Architecture Explained</h2>
+  <p class="section-sub">What each layer does in our model</p>
+
+  <div class="grid-2">
+    <div class="card">
+      <h3>🔍 Conv2D Layer</h3>
+      <p style="margin-top:0.75rem; color:#555; line-height:1.7">
+        Scans the image with small filters (3×3 pixels) to detect features like edges,
+        curves, and colors. First layers detect simple features, deeper layers detect
+        complex shapes like arrows and numbers.
+      </p>
+    </div>
+    <div class="card">
+      <h3>📉 MaxPooling2D</h3>
+      <p style="margin-top:0.75rem; color:#555; line-height:1.7">
+        Reduces the image size by half while keeping the most important information.
+        This makes the model faster and prevents it from memorizing exact pixel positions.
+      </p>
+    </div>
+    <div class="card">
+      <h3>🎲 Dropout</h3>
+      <p style="margin-top:0.75rem; color:#555; line-height:1.7">
+        Randomly turns off some neurons during training. This prevents the model from
+        memorizing training data (overfitting) and forces it to learn generalizable patterns.
+      </p>
+    </div>
+    <div class="card">
+      <h3>🧮 Dense (Fully Connected)</h3>
+      <p style="margin-top:0.75rem; color:#555; line-height:1.7">
+        Takes all the learned features and combines them to make the final prediction.
+        The last Dense layer has 43 outputs (one for each sign class) with Softmax activation.
+      </p>
+    </div>
+    <div class="card">
+      <h3>📊 Softmax Output</h3>
+      <p style="margin-top:0.75rem; color:#555; line-height:1.7">
+        Converts raw scores into probabilities for all 43 classes. The class with the
+        highest probability is the predicted sign. The confidence score shows how sure
+        the model is.
+      </p>
+    </div>
+    <div class="card">
+      <h3>⚡ Adam Optimizer</h3>
+      <p style="margin-top:0.75rem; color:#555; line-height:1.7">
+        Automatically adjusts the model's learning rate during training to find the
+        best weights faster. It's one of the most popular optimizers for deep learning.
+      </p>
+    </div>
+  </div>
+
+  <div class="card" style="margin-top:2rem; background: linear-gradient(135deg, var(--dark), var(--primary)); color:white; text-align:center">
+    <h3 style="color:var(--accent)">📌 Project Summary</h3>
+    <div class="grid-3" style="margin-top:1.5rem">
+      <div>
+        <div style="font-size:2.5rem; font-weight:700; color:var(--accent)">43</div>
+        <div style="opacity:0.8">Sign Classes</div>
+      </div>
+      <div>
+        <div style="font-size:2.5rem; font-weight:700; color:var(--accent)">~90%</div>
+        <div style="opacity:0.8">Expected Accuracy</div>
+      </div>
+      <div>
+        <div style="font-size:2.5rem; font-weight:700; color:var(--accent)">12</div>
+        <div style="opacity:0.8">CNN Layers</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  <p>🚦 Traffic Sign Recognition | ML Project | Built with Flask + TensorFlow</p>
+</footer>
+
+<script src="/static/js/main.js"></script>
+</body>
+</html>
