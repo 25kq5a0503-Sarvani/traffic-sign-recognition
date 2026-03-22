@@ -26,6 +26,14 @@ def live_page():
 @app.route('/live-auto')
 def live_auto_page():
     return render_template('live_auto.html')
+
+@app.route('/dataset')
+def dataset():
+    return render_template('dataset.html')
+
+@app.route('/train')
+def train_page():
+    return render_template('train.html')
     
 @app.route('/about')
 def about():
