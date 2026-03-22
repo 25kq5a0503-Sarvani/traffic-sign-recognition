@@ -1,6 +1,6 @@
 import numpy as np
 import matplotlib
-matplotlib.use('Agg')  # GUI లేకుండా graphs save చేయడానికి
+matplotlib.use('Agg')  
 import matplotlib.pyplot as plt
 import tensorflow as tf
 from tensorflow.keras.models import Sequential
@@ -43,7 +43,7 @@ SIGN_NAMES = {
 }
 
 def load_data(data_path):
-    """Dataset folder నుండి images & labels load చేస్తుంది"""
+    """loading images & labels from dataset folder"""
     images, labels = [], []
     for class_id in range(NUM_CLASSES):
         class_path = os.path.join(data_path, str(class_id))
@@ -62,7 +62,7 @@ def load_data(data_path):
     return np.array(images), np.array(labels)
 
 def build_model():
-    """CNN model build చేస్తుంది"""
+    """Building the CNN model"""
     model = Sequential([
         Conv2D(32,(3,3), activation='relu', input_shape=(IMG_SIZE,IMG_SIZE,3)),
         Conv2D(32,(3,3), activation='relu'),
@@ -132,7 +132,7 @@ def _save_graphs(history):
     plt.close()
 
 def predict(img_path):
-    """Image ఇస్తే sign predict చేస్తుంది"""
+    """If we give Image It Predicts the size"""
     from tensorflow.keras.models import load_model
     if not os.path.exists('model/traffic_model.h5'):
         raise FileNotFoundError("Model not found! Train first.")
